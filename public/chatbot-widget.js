@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
             inputField.value = '';
             chatBox.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
 
-            // Send the user's message to the FastAPI backend
-            fetch('http://127.0.0.1:8000/chat', {
+            // Send the user's message to the FastAPI backend (use the live deployment link here)
+            fetch('https://shop-bot-sooty.vercel.app/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,12 +46,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-//  Deploy Your FastAPI Backend
-// Make sure your FastAPI backend is running and accessible at the correct URL (http://127.0.0.1:8000). If you're deploying your FastAPI backend (e.g., on Vercel), update the JavaScript in chatbot-widget.js to use the deployed backend URL.
-// fetch('https://your-deployed-api-url.com/chat', {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ message: userMessage })
-// })

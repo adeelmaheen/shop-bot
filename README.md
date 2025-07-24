@@ -26,3 +26,7 @@ cd shopify-gemini-chatbot
 
 # run the file:   uvicorn main:app --reload
 # for query to chat bot :   curl -X POST "http://127.0.0.1:8000/chat" -H "Content-Type: application/json" -d "{\"message\": \"Tell me about who is maheen arif\"}"
+
+# Home page: https://your-project-name.vercel.app/
+
+# Chat endpoint: https://your-project-name.vercel.app/chat
