@@ -1,0 +1,32 @@
+2. Integrating the Chatbot UI on Your Shopify Store
+To add this chatbot widget to your Shopify store, follow these steps:
+
+Step 1: Upload the chatbot-widget.js to Shopify
+Go to your Shopify Admin:
+
+In your Shopify admin panel, go to Online Store > Themes.
+
+Upload chatbot-widget.js to the assets folder:
+
+In the theme editor, click on Actions > Edit code.
+
+Go to the Assets folder, then click on Add a new asset.
+
+Upload your chatbot-widget.js file here.
+
+Step 2: Create the Shopify Liquid Template
+Create a new file in your Shopify theme called gemini_integration.liquid (or any name you prefer), and add the following code:
+
+<script src="{{ 'chatbot-widget.js' | asset_url }}"></script>
+
+
+Step 3: Add the Liquid Template to Your Theme Layout
+Now, include this template in your Shopify theme to ensure it loads the chatbot on the page. For example, you can add this to your theme.liquid layout file (or a specific template where you want the chatbot):
+
+Go to the theme.liquid file (or the template you want to add the chatbot to).
+
+Just before the closing </body> tag, include the following:
+
+
+{% include 'gemini_integration' %}
+This ensures the chatbot widget is loaded on the page.

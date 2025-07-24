@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopify Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        #chatbot-container {
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+        }
+        #chatbox {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+        }
+        #user-input {
+            display: flex;
+            padding: 10px;
+        }
+        #user-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #user-input button {
+            padding: 10px;
+            margin-left: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #user-input button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .user-message {
+            text-align: right;
+        }
+        .bot-message {
+            text-align: left;
+            color: #007bff;
+        }
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        #chatbot-toggle:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="chatbot-container">
+        <div id="chatbox"></div>
+        <div id="user-input">
+            <input type="text" id="user-message" placeholder="Type your message..." />
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <button id="chatbot-toggle">💬</button>
+
+    <script>
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const chatbox = document.getElementById('chatbox');
+        const userMessageInput = document.getElementById('user-message');
+        const sendButton = document.getElementById('send-button');
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+
+        // Toggle chatbot visibility
+        chatbotToggle.addEventListener('click', () => {
+            chatbotContainer.style.display = chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '' ? 'flex' : 'none';
+        });
+
+        // Send message to chatbot
+        sendButton.addEventListener('click', () => {
+            const userMessage = userMessageInput.value.trim();
+            if (userMessage) {
+                appendMessage(userMessage, 'user');
+                userMessageInput.value = '';
+                getBotResponse(userMessage);
+            }
+        });
+
+        // Append message to chatbox
+        function appendMessage(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+            messageElement.textContent = message;
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        // Fetch bot response
+        function getBotResponse(userMessage) {
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userMessage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                appendMessage(data.response, 'bot');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                appendMessage('Sorry, I am having trouble understanding you right now.', 'bot');
+            });
+        }
+    </script>
+
+</body>
+</html>
